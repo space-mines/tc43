@@ -14,7 +14,11 @@ type game struct {
 
 var games = make(map[string]game)
 
-func findGameById(id string) game {
-
-	return games[id]
+func FindGameById(id string) game {
+	game := games[id]
+	if game.Asteroids == nil {
+		game.Asteroids = make(map[string]asteroid)
+		games[id] = game
+	}
+	return game
 }

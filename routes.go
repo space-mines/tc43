@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/heroku/tc43/models"
 	"net/http"
 )
 
@@ -11,6 +12,6 @@ func initializeRoutes() {
 	})
 
 	router.GET("/game/:id", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"data": "hello world"})
+		c.JSON(http.StatusOK, models.FindGameById(c.Param("id")))
 	})
 }
