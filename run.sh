@@ -1,2 +1,2 @@
-go build -o bin/tk43 -v .
+go build -o bin/tc43 -v .
 heroku local web

@@ -5,4 +5,4 @@ build:
     - go
 
 run:
-  web: tk43
+  web: tc43

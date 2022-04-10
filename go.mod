@@ -1,4 +1,4 @@
-module github.com/heroku/tk43
+module github.com/heroku/tc43
 
 // +heroku goVersion go1.17
 go 1.17
