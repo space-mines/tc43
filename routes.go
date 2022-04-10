@@ -11,6 +11,10 @@ func initializeRoutes() {
 		c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	})
 
+	router.GET("/game", func(c *gin.Context) {
+		c.JSON(http.StatusOK, models.CreateNewGame("DEFAULT", 1, 3))
+	})
+
 	router.GET("/game/:id", func(c *gin.Context) {
 		c.JSON(http.StatusOK, models.FindGameById(c.Param("id")))
 	})
