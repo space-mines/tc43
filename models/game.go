@@ -6,7 +6,7 @@ type mine struct {
 	z int
 }
 
-type Asteroid struct {
+type Sector struct {
 	Id        int  `json:"id"`
 	X         int  `json:"x"`
 	Y         int  `json:"y"`
@@ -16,10 +16,10 @@ type Asteroid struct {
 }
 
 type Game struct {
-	Id        string     `json:"id"`
-	Asteroids []Asteroid `json:"sectors"`
-	State     string     `json:"state"`
-	mines     []mine
+	Id      string   `json:"id"`
+	Sectors []Sector `json:"sectors"`
+	State   string   `json:"state"`
+	mines   []mine
 }
 
 var games = make(map[string]Game)
@@ -33,12 +33,12 @@ func FindGameById(id string) Game {
 }
 
 func CreateNewGame(id string, mineCount int, scale int) Game {
-	game := Game{Id: id, State: "PLAY", Asteroids: make([]Asteroid, scale*scale*scale)}
+	game := Game{Id: id, State: "PLAY", Sectors: make([]Sector, scale*scale*scale)}
 	nextId := 0
 	for x := 0; x < scale; x++ {
 		for y := 0; y < scale; y++ {
 			for z := 0; z < scale; z++ {
-				game.Asteroids = append(game.Asteroids, Asteroid{Id: nextId, X: x, Y: y, Z: z, Radiation: -1, Marked: false})
+				game.Sectors = append(game.Sectors, Sector{Id: nextId, X: x, Y: y, Z: z, Radiation: -1, Marked: false})
 				nextId++
 			}
 		}
