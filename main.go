@@ -25,6 +25,12 @@ func main() {
 
 	initializeRoutes()
 
-	router.Use(cors.Default())
+	corsConfig := cors.DefaultConfig()
+
+	corsConfig.AllowOrigins = []string{"https://space-mines.github.io"}
+	corsConfig.AddAllowMethods("GET")
+
+	// Register the middleware
+	router.Use(cors.New(corsConfig))
 	router.Run(":" + port)
 }
