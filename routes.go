@@ -15,7 +15,13 @@ func initializeRoutes() {
 		c.JSON(http.StatusOK, models.CreateNewGame("DEFAULT", 1, 3))
 	})
 
-	router.GET("/game/:id", func(c *gin.Context) {
-		c.JSON(http.StatusOK, models.FindGameById(c.Param("id")))
+	router.GET("/game/reveal", func(c *gin.Context) {
+		sectorId := c.Query("sectorId")
+		c.JSON(http.StatusOK, models.RevealSector("DEFAULT", sectorId))
+	})
+
+	router.GET("/game/mark", func(c *gin.Context) {
+		sectorId := c.Query("sectorId")
+		c.JSON(http.StatusOK, models.MarkSector("DEFAULT", sectorId))
 	})
 }
