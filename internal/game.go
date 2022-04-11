@@ -1,6 +1,9 @@
 package internal
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
 type mine struct {
 	x int
@@ -18,22 +21,24 @@ type Sector struct {
 }
 
 type Game struct {
-	Id        string   `json:"id"`
-	Sectors   []Sector `json:"sectors"`
-	State     string   `json:"state"`
-	sectorMap map[string]Sector
-	mines     []mine
+	Id      string   `json:"id"`
+	Sectors []Sector `json:"sectors"`
+	State   string   `json:"state"`
+	mines   []mine
+}
+
+func (sector Sector) print() {
+	println(fmt.Sprintf("Sector[id=%d,marked=%v]", sector.Id, sector.Marked))
 }
 
 func NewGame(id string, scale int) Game {
-	game := Game{Id: id, State: "PLAY", Sectors: make([]Sector, 0), sectorMap: make(map[string]Sector)}
+	game := Game{Id: id, State: "PLAY", Sectors: make([]Sector, 0)}
 	nextId := 0
 	for x := 0; x < scale; x++ {
 		for y := 0; y < scale; y++ {
 			for z := 0; z < scale; z++ {
 				sector := Sector{Id: nextId, X: x, Y: y, Z: z, Radiation: -1, Marked: false}
 				game.Sectors = append(game.Sectors, sector)
-				game.sectorMap[strconv.Itoa(nextId)] = sector
 				nextId++
 			}
 		}
@@ -43,12 +48,15 @@ func NewGame(id string, scale int) Game {
 }
 
 func (game *Game) Reveal(sectorId string) {
-	sector := game.sectorMap[sectorId]
+	index, _ := strconv.Atoi(sectorId)
+	sector := &game.Sectors[index]
 	sector.Radiation = 1
+	sector.print()
 }
 
 func (game *Game) Mark(sectorId string) {
-	sector := game.sectorMap[sectorId]
-	println(sector.Id)
+	index, _ := strconv.Atoi(sectorId)
+	sector := &game.Sectors[index]
 	sector.Marked = true
+	sector.print()
 }
