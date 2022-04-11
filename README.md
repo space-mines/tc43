@@ -1,32 +1,88 @@
+# TC43
 
-# tc43
-
-A barebones Go app, which can easily be deployed to Heroku.
-
-This application supports the [Getting Started with Go on Heroku](https://devcenter.heroku.com/articles/getting-started-with-go) article - check it out.
+Golang API for TC43 web game
 
 ## Running Locally
 
-Make sure you have [Go](http://golang.org/doc/install) version 1.17 or newer and the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed.
-
 ```sh
-$ git clone https://github.com/heroku/tc43.git
+$ git clone https://github.com/space-mines/tc43.git
 $ cd tc43
-$ go build -o bin/tc43 -v . # or `go build -o bin/tc43.exe -v .` in git bash
-github.com/mattn/go-colorable
-gopkg.in/bluesuncorp/validator.v5
-golang.org/x/net/context
-github.com/heroku/x/hmetrics
-github.com/gin-gonic/gin/render
-github.com/manucorporat/sse
-github.com/heroku/x/hmetrics/onload
-github.com/gin-gonic/gin/binding
-github.com/gin-gonic/gin
-github.com/heroku/tc43
-$ heroku local
+$ ./run.sh
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+Your API should now be running on [localhost:5000](http://localhost:5000/).
+
+### API
+
+It utilizes a very GETful API with JSON formatted information on the game.
+
+#### JSON body
+```json
+{
+  "state": "PLAY",
+  "size": 4,
+  "sectors": [
+    {
+      "id": 0,
+      "marked": false,
+      "radiation": -1,
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    {
+      "id": 63,
+      "marked": false,
+      "radiation": -1,
+      "x": 3,
+      "y": 3,
+      "z": 3
+    }
+  ]
+}
+```
+
+#### Endpoints
+| method | path                      | description                                            |
+|--------|---------------------------|--------------------------------------------------------|
+| GET    | `/game`                   | returns a new game                                     |
+| GET    | `/game/reveal?sectorId=2` | returns game data after revealing sector with `id=2`   | |
+| GET    | `/game/mark?sectorId=3`   | returns game data after marking sector with `id=3`     |
+
+#### Game state
+
+| value  | description                      |
+|--------|----------------------------------|
+| `PLAY` | active game                      |
+| `WIN`  | current game has ended with win  |
+| `LOSE` | current game has ended with loss |  
+
+#### Radiation
+| value   | description                |
+|---------|----------------------------|
+| `-1`    | Unknown                    |
+| `0`     | No mines are adjacent      |
+| `1..24` | 1 to 24 mines are adjacent |
+| `25`    | Mine in this sector        |
+
+#### Sector colors
+| radiation | color  |
+|-----------|--------|
+| `-1`      | gray   |
+| `0`       | none   |
+| `1`       | blue   |
+| `2`       | green  |
+| `3`       | yellow |
+| `4`       | orange |
+| `5`       | red    |
+
+## Database NOT required yet
+
+When we use a database, ensure you have a local `.env` file that reads something like this:
+
+```
+DATABASE_URL=postgres://localhost:5432/gradle_database_name
+```
 
 ## Deploying to Heroku
 
@@ -35,15 +91,3 @@ $ heroku create
 $ git push heroku main
 $ heroku open
 ```
-
-or
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-
-## Documentation
-
-For more information about using Go on Heroku, see these Dev Center articles:
-
-- [Go on Heroku](https://devcenter.heroku.com/categories/go)
-# tc43
