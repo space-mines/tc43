@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"log"
 	"os"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
 )
@@ -18,13 +18,13 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 
-	router = gin.New()
-	router.Use(cors.Default())
+	router = gin.Default()
 	router.Use(gin.Logger())
 	router.LoadHTMLGlob("templates/*.tmpl.html")
 	router.Static("/static", "static")
 
 	initializeRoutes()
 
+	router.Use(cors.Default())
 	router.Run(":" + port)
 }
