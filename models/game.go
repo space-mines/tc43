@@ -25,17 +25,7 @@ type Game struct {
 	mines     []mine
 }
 
-var games = make(map[string]Game)
-
-func FindGameById(id string) Game {
-	game, exists := games[id]
-	if !exists {
-		game = CreateNewGame(id, 3, 3)
-	}
-	return game
-}
-
-func CreateNewGame(id string, mineCount int, scale int) Game {
+func NewGame(id string, scale int) Game {
 	game := Game{Id: id, State: "PLAY", Sectors: make([]Sector, 0), sectorMap: make(map[string]Sector)}
 	nextId := 0
 	for x := 0; x < scale; x++ {
@@ -49,21 +39,16 @@ func CreateNewGame(id string, mineCount int, scale int) Game {
 		}
 	}
 	game.mines = []mine{{x: 1, y: 1, z: 1}}
-	games[id] = game
 	return game
 }
 
-func RevealSector(id string, sectorId string) Game {
-	game := FindGameById(id)
+func (game *Game) Reveal(sectorId string) {
 	sector := game.sectorMap[sectorId]
 	sector.Radiation = 1
-	return game
 }
 
-func MarkSector(id string, sectorId string) Game {
-	game := FindGameById(id)
+func (game *Game) Mark(sectorId string) {
 	sector := game.sectorMap[sectorId]
 	println(sector.Id)
 	sector.Marked = true
-	return game
 }
