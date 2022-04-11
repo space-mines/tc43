@@ -17,7 +17,7 @@ type Asteroid struct {
 
 type Game struct {
 	Id        string     `json:"id"`
-	Asteroids []Asteroid `json:"asteroids"`
+	Asteroids []Asteroid `json:"sectors"`
 	State     string     `json:"state"`
 	mines     []mine
 }
