@@ -36,7 +36,7 @@ func FindGameById(id string) Game {
 }
 
 func CreateNewGame(id string, mineCount int, scale int) Game {
-	game := Game{Id: id, State: "PLAY", Sectors: make([]Sector, scale*scale*scale)}
+	game := Game{Id: id, State: "PLAY", Sectors: make([]Sector, 0), sectorMap: make(map[string]Sector)}
 	nextId := 0
 	for x := 0; x < scale; x++ {
 		for y := 0; y < scale; y++ {
@@ -63,6 +63,7 @@ func RevealSector(id string, sectorId string) Game {
 func MarkSector(id string, sectorId string) Game {
 	game := FindGameById(id)
 	sector := game.sectorMap[sectorId]
+	println(sector.Id)
 	sector.Marked = true
 	return game
 }
