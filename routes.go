@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/heroku/tc43/internal"
+	"github.com/twcrone/space-mines/tc43/internal"
 	"net/http"
 )
 
