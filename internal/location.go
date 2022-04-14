@@ -15,19 +15,24 @@ func contains(locations []Location, x int, y int, z int) bool {
 	return false
 }
 
-func (Location Location) CalculateRadiation(mines []Location) int {
-	if contains(mines, Location.X, Location.Y, Location.Z) {
+func countAdjacentMines(locations []Location, x int, y int, z int) int {
+	count := 0
+	for _, location := range locations {
+		if location.X <= x+1 &&
+			location.X >= x-1 &&
+			location.Y <= y+1 &&
+			location.Y >= y-1 &&
+			location.Z <= z+1 &&
+			location.Z >= z-1 {
+			count++
+		}
+	}
+	return count
+}
+
+func (location Location) CalculateRadiation(mines []Location) int {
+	if contains(mines, location.X, location.Y, location.Z) {
 		return 43
 	}
-	radiation := 0
-	if contains(mines, Location.X-1, Location.Y-1, Location.Z-1) {
-		radiation++
-	}
-	if contains(mines, Location.X+1, Location.Y+1, Location.Z+1) {
-		radiation++
-	}
-	if contains(mines, Location.X+1, Location.Y+1, Location.Z) {
-		radiation++
-	}
-	return radiation
+	return countAdjacentMines(mines, location.X, location.Y, location.Z)
 }

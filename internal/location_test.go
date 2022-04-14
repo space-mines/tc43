@@ -39,7 +39,7 @@ var _ = Describe("Location", func() {
 		Context("with three mines adjacent", func() {
 			It("should be a 3", func() {
 				mines := []internal.Location{{X: 0, Y: 0, Z: 0}, {X: 2, Y: 2, Z: 2}, {X: 1, Y: 1, Z: 2}}
-				Expect(location.CalculateRadiation(mines)).To(Equal(2))
+				Expect(location.CalculateRadiation(mines)).To(Equal(3))
 			})
 		})
 
