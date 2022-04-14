@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	"github.com/heroku/tc43/internal"
+	"github.com/twcrone/space-mines/tc43/internal"
 )
 
 var _ = Describe("Location", func() {

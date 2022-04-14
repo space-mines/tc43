@@ -19,12 +19,12 @@ func (sector Sector) print() {
 
 func NewGame(id string, mines []Location, sectors []Sector, scale int) Game {
 	if sectors == nil || len(sectors) == 0 {
-		sectors = generateBlankSectors(scale)
+		sectors = GenerateBlankSectors(scale)
 	}
 	return Game{Id: id, State: "PLAY", Sectors: sectors, Size: scale, mines: mines}
 }
 
-func generateBlankSectors(scale int) []Sector {
+func GenerateBlankSectors(scale int) []Sector {
 	nextId := 0
 	sectors := make([]Sector, 0)
 	for x := 0; x < scale; x++ {
@@ -40,7 +40,7 @@ func generateBlankSectors(scale int) []Sector {
 }
 
 func GenerateGame(id string, scale int) Game {
-	sectors := generateBlankSectors(scale)
+	sectors := GenerateBlankSectors(scale)
 	game := Game{Id: id, State: "PLAY", Sectors: sectors}
 	game.mines = []Location{{X: 1, Y: 1, Z: 1}, {X: 0, Y: 0, Z: 0}}
 	return game
@@ -52,6 +52,8 @@ func (game *Game) Reveal(sectorId string) {
 	location := Location{sector.X, sector.Y, sector.Z}
 	radiation := location.CalculateRadiation(game.mines)
 	sector.Radiation = radiation
+	sectors := RemoveSectorsWithNoRadiation(game.Sectors)
+	game.Sectors = sectors
 	sector.print()
 }
 
