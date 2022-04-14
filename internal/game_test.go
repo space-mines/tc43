@@ -4,7 +4,7 @@ import "testing"
 
 func TestRevealSector(t *testing.T) {
 	// Given
-	game := NewGame("testing", []Location{{x: 2, y: 2, z: 2}}, nil, 3)
+	game := NewGame("testing", []Location{{X: 2, Y: 2, Z: 2}}, nil, 3)
 
 	// When
 	game.Reveal("0")
