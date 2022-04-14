@@ -2,9 +2,9 @@ package internal
 
 type Sector struct {
 	Id        int  `json:"id"`
-	X         int  `json:"X"`
-	Y         int  `json:"Y"`
-	Z         int  `json:"Z"`
+	X         int  `json:"x"`
+	Y         int  `json:"y"`
+	Z         int  `json:"z"`
 	Radiation int  `json:"radiation"`
 	Marked    bool `json:"marked"`
 }
