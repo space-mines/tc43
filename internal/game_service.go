@@ -11,7 +11,7 @@ func FindGameById(id string) Game {
 }
 
 func CreateNewGame(id string, mineCount int, scale int) Game {
-	game := NewGame(id, scale)
+	game := GenerateGame(id, scale)
 	games[id] = game
 	return game
 }

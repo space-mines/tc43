@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-type mine struct {
+type Location struct {
 	x int
 	y int
 	z int
@@ -24,26 +24,39 @@ type Game struct {
 	Id      string   `json:"id"`
 	Sectors []Sector `json:"sectors"`
 	State   string   `json:"state"`
-	mines   []mine
+	mines   []Location
 }
 
 func (sector Sector) print() {
 	println(fmt.Sprintf("Sector[id=%d,marked=%v]", sector.Id, sector.Marked))
 }
 
-func NewGame(id string, scale int) Game {
-	game := Game{Id: id, State: "PLAY", Sectors: make([]Sector, 0)}
+func NewGame(id string, mines []Location, sectors []Sector, scale int) Game {
+	if sectors == nil || len(sectors) == 0 {
+		sectors = generateBlankSectors(scale)
+	}
+	return Game{Id: id, State: "PLAY", Sectors: sectors, mines: mines}
+}
+
+func generateBlankSectors(scale int) []Sector {
 	nextId := 0
+	sectors := make([]Sector, 0)
 	for x := 0; x < scale; x++ {
 		for y := 0; y < scale; y++ {
 			for z := 0; z < scale; z++ {
 				sector := Sector{Id: nextId, X: x, Y: y, Z: z, Radiation: -1, Marked: false}
-				game.Sectors = append(game.Sectors, sector)
+				sectors = append(sectors, sector)
 				nextId++
 			}
 		}
 	}
-	game.mines = []mine{{x: 1, y: 1, z: 1}}
+	return sectors
+}
+
+func GenerateGame(id string, scale int) Game {
+	sectors := generateBlankSectors(scale)
+	game := Game{Id: id, State: "PLAY", Sectors: sectors}
+	game.mines = []Location{{x: 1, y: 1, z: 1}}
 	return game
 }
 
