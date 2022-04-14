@@ -48,7 +48,9 @@ func GenerateGame(id string, scale int) Game {
 func (game *Game) Reveal(sectorId string) {
 	index, _ := strconv.Atoi(sectorId)
 	sector := &game.Sectors[index]
-	sector.Radiation = 1
+	location := Location{sector.X, sector.Y, sector.Z}
+	radiation := location.CalculateRadiation(game.mines)
+	sector.Radiation = radiation
 	sector.print()
 }
 
