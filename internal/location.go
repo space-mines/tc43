@@ -20,5 +20,8 @@ func (Location Location) CalculateRadiation(mines []Location) int {
 	if contains(mines, Location.X-1, Location.Y-1, Location.Z-1) {
 		radiation++
 	}
+	if contains(mines, Location.X+1, Location.Y+1, Location.Z+1) {
+		radiation++
+	}
 	return radiation
 }
