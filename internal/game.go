@@ -14,7 +14,7 @@ type Game struct {
 }
 
 func (sector Sector) print() {
-	println(fmt.Sprintf("Sector[id=%d,marked=%v]", sector.Id, sector.Marked))
+	println(fmt.Sprintf("Sector[id=%d,radiation=%d,marked=%v]", sector.Id, sector.Radiation, sector.Marked))
 }
 
 func NewGame(id string, mines []Location, sectors []Sector, scale int) Game {
