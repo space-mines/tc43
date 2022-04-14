@@ -12,7 +12,7 @@ func initializeRoutes() {
 	})
 
 	router.GET("/game", func(c *gin.Context) {
-		c.JSON(http.StatusOK, internal.CreateNewGame("DEFAULT", 1, 3))
+		c.JSON(http.StatusOK, internal.CreateNewGame("DEFAULT", 1, 4))
 	})
 
 	router.GET("/game/reveal", func(c *gin.Context) {
