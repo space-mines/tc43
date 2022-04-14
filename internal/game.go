@@ -5,21 +5,6 @@ import (
 	"strconv"
 )
 
-type Location struct {
-	x int
-	y int
-	z int
-}
-
-type Sector struct {
-	Id        int  `json:"id"`
-	X         int  `json:"x"`
-	Y         int  `json:"y"`
-	Z         int  `json:"z"`
-	Radiation int  `json:"radiation"`
-	Marked    bool `json:"marked"`
-}
-
 type Game struct {
 	Id      string   `json:"id"`
 	Sectors []Sector `json:"sectors"`
