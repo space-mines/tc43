@@ -52,8 +52,6 @@ func (game *Game) Reveal(sectorId string) {
 	location := Location{sector.X, sector.Y, sector.Z}
 	radiation := location.CalculateRadiation(game.mines)
 	sector.Radiation = radiation
-	sectors := RemoveSectorsWithNoRadiation(game.Sectors)
-	game.Sectors = sectors
 	sector.print()
 }
 
