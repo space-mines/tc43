@@ -48,6 +48,9 @@ func GenerateGame(id string, scale int) Game {
 }
 
 func (game *Game) Reveal(sectorId int) {
+	if sectorId < 0 || sectorId >= len(game.Sectors) {
+		return
+	}
 	sector := &game.Sectors[sectorId]
 	if sector.Radiation != -1 || sector.Marked {
 		return
@@ -60,6 +63,18 @@ func (game *Game) Reveal(sectorId int) {
 		println("Revealing adjacent sectors...")
 		game.revealAdjacentSectorsTo(sector.X, sector.Y, sector.Z)
 	}
+}
+
+func (game *Game) Mark(sectorId int) {
+	if sectorId < 0 || sectorId >= len(game.Sectors) {
+		return
+	}
+	sector := &game.Sectors[sectorId]
+	if sector.Radiation != -1 {
+		return
+	}
+	sector.Marked = !sector.Marked
+	sector.print()
 }
 
 func (game *Game) revealAdjacentSectorsTo(x int, y int, z int) {
@@ -100,15 +115,6 @@ func isValidSectorLocation(x int, y int, z int, scale int) bool {
 
 func isValidCoordinate(n int, scale int) bool {
 	return n > -1 && n < scale
-}
-
-func (game *Game) Mark(sectorId int) {
-	sector := &game.Sectors[sectorId]
-	if sector.Radiation != -1 {
-		return
-	}
-	sector.Marked = !sector.Marked
-	sector.print()
 }
 
 func getSectorIdFromLocation(x int, y int, z int, scale int) int {

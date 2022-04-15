@@ -27,6 +27,7 @@ var _ = Describe("Game", func() {
 			game := internal.NewGame("test", mines, sectors, 3)
 			game.Reveal(2) // click edge
 			sectorIdsAdjacentToMine := internal.GetAdjacentSectorIdsFor(0, 0, 0, 3)
+
 			It("reveals all sectors with 0 radiation", func() {
 				for sectorId := range game.Sectors {
 					if !internal.Contains(sectorIdsAdjacentToMine, sectorId) && sectorId != 0 {
@@ -35,9 +36,11 @@ var _ = Describe("Game", func() {
 					}
 				}
 			})
+
 			It("does not reveal the mine", func() {
 				Expect(game.Sectors[0].Radiation).To(Equal(-1))
 			})
+
 			It("reveals sectors around mine", func() {
 				for sectorId := range game.Sectors {
 					if internal.Contains(sectorIdsAdjacentToMine, sectorId) {
@@ -46,6 +49,7 @@ var _ = Describe("Game", func() {
 					}
 				}
 			})
+
 		})
 
 		Context("when sector is already marked", func() {
@@ -79,6 +83,23 @@ var _ = Describe("Game", func() {
 				}
 			})
 		})
+
+		Context("when sector ID is invalid", func() {
+			It("does nothing", func() {
+				mines := []internal.Location{{X: 1, Y: 1, Z: 1}}
+				sectors := internal.GenerateBlankSectors(3)
+				game := internal.NewGame("test", mines, sectors, 3)
+				game.Reveal(100)
+				for i := 0; i < len(game.Sectors); i++ {
+					Expect(game.Sectors[i].Radiation).To(Equal(-1))
+				}
+				game.Reveal(-100)
+				for i := 0; i < len(game.Sectors); i++ {
+					Expect(game.Sectors[i].Radiation).To(Equal(-1))
+				}
+			})
+		})
+
 	})
 
 	Describe("Mark Sector", func() {
