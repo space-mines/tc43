@@ -36,3 +36,8 @@ func (location Location) CalculateRadiation(mines []Location) int {
 	}
 	return countAdjacentMines(mines, location.X, location.Y, location.Z)
 }
+
+func CalculateRadiationFor(x int, y int, z int, mines []Location) int {
+	location := Location{X: x, Y: y, Z: z}
+	return location.CalculateRadiation(mines)
+}
