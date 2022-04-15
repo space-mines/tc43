@@ -2,7 +2,7 @@ package internal
 
 import (
 	"fmt"
-	"strconv"
+	"math"
 )
 
 type Game struct {
@@ -47,18 +47,20 @@ func GenerateGame(id string, scale int) Game {
 	return game
 }
 
-func (game *Game) Reveal(sectorId string) {
-	index, _ := strconv.Atoi(sectorId)
-	sector := &game.Sectors[index]
+func (game *Game) Reveal(sectorId int) {
+	sector := &game.Sectors[sectorId]
 	location := Location{sector.X, sector.Y, sector.Z}
 	radiation := location.CalculateRadiation(game.mines)
 	sector.Radiation = radiation
 	sector.print()
 }
 
-func (game *Game) Mark(sectorId string) {
-	index, _ := strconv.Atoi(sectorId)
-	sector := &game.Sectors[index]
+func (game *Game) Mark(sectorId int) {
+	sector := &game.Sectors[sectorId]
 	sector.Marked = true
 	sector.print()
+}
+
+func getSectorIdFromLocation(x int, y int, z int, scale int) int {
+	return x*int(math.Pow(float64(scale), 2)) + y*scale + z
 }

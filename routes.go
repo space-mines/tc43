@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/twcrone/space-mines/tc43/internal"
 	"net/http"
+	"strconv"
 )
 
 func initializeRoutes() {
@@ -17,11 +18,13 @@ func initializeRoutes() {
 
 	router.GET("/game/reveal", func(c *gin.Context) {
 		sectorId := c.Query("sectorId")
-		c.JSON(http.StatusOK, internal.RevealSector("DEFAULT", sectorId))
+		sectorIdAsInt, _ := strconv.Atoi(sectorId)
+		c.JSON(http.StatusOK, internal.RevealSector("DEFAULT", sectorIdAsInt))
 	})
 
 	router.GET("/game/mark", func(c *gin.Context) {
 		sectorId := c.Query("sectorId")
-		c.JSON(http.StatusOK, internal.MarkSector("DEFAULT", sectorId))
+		sectorIdAsInt, _ := strconv.Atoi(sectorId)
+		c.JSON(http.StatusOK, internal.MarkSector("DEFAULT", sectorIdAsInt))
 	})
 }

@@ -16,13 +16,13 @@ func CreateNewGame(id string, mineCount int, scale int) Game {
 	return game
 }
 
-func MarkSector(id string, sectorId string) Game {
+func MarkSector(id string, sectorId int) Game {
 	game := FindGameById(id)
 	game.Mark(sectorId)
 	return game
 }
 
-func RevealSector(id string, sectorId string) Game {
+func RevealSector(id string, sectorId int) Game {
 	game := FindGameById(id)
 	game.Reveal(sectorId)
 	return game
