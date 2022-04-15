@@ -79,7 +79,7 @@ func (game *Game) Mark(sectorId int) {
 		return
 	}
 	sector.Marked = !sector.Marked
-	if sector.Marked && game.allMinesMarked() {
+	if game.allMinesMarked() {
 		game.State = "WIN"
 		game.revealAllSectors()
 	}
