@@ -100,6 +100,15 @@ var _ = Describe("Game", func() {
 			})
 		})
 
+		Context("when sector contains mine", func() {
+			mines := []internal.Location{{X: 0, Y: 0, Z: 0}}
+			sectors := internal.GenerateBlankSectors(3)
+			game := internal.NewGame("test", mines, sectors, 3)
+			game.Reveal(0)
+			It("sets game state to LOSE", func() {
+				Expect(game.State).To(Equal("LOSE"))
+			})
+		})
 	})
 
 	Describe("Mark Sector", func() {

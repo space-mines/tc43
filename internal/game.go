@@ -59,6 +59,9 @@ func (game *Game) Reveal(sectorId int) {
 	radiation := location.CalculateRadiation(game.mines)
 	sector.Radiation = radiation
 	sector.print()
+	if sector.Radiation == 43 {
+		game.State = "LOSE"
+	}
 	if sector.Radiation == 0 {
 		println("Revealing adjacent sectors...")
 		game.revealAdjacentSectorsTo(sector.X, sector.Y, sector.Z)
