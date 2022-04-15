@@ -160,4 +160,20 @@ var _ = Describe("Game", func() {
 		})
 	})
 
+	Context("when sector ID is invalid", func() {
+		It("does nothing", func() {
+			mines := []internal.Location{{X: 1, Y: 1, Z: 1}}
+			sectors := internal.GenerateBlankSectors(3)
+			game := internal.NewGame("test", mines, sectors, 3)
+			game.Mark(100)
+			for i := 0; i < len(game.Sectors); i++ {
+				Expect(game.Sectors[i].Radiation).To(Equal(-1))
+			}
+			game.Mark(-100)
+			for i := 0; i < len(game.Sectors); i++ {
+				Expect(game.Sectors[i].Radiation).To(Equal(-1))
+			}
+		})
+	})
+
 })
