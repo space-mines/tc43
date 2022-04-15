@@ -48,5 +48,36 @@ var _ = Describe("Game", func() {
 			})
 		})
 
+		Context("when sector is already marked", func() {
+			mines := []internal.Location{{X: 0, Y: 0, Z: 0}}
+			sectors := internal.GenerateBlankSectors(3)
+			game := internal.NewGame("test", mines, sectors, 3)
+			game.Sectors[2].Marked = true
+			game.Reveal(2) // click edge
+			It("should not reveal any sectors", func() {
+				for sectorId := range game.Sectors {
+					sector := game.Sectors[sectorId]
+					Expect(sector.Radiation).To(Equal(-1))
+				}
+			})
+		})
+
+		Context("when sector is already revealed", func() {
+			mines := []internal.Location{{X: 0, Y: 0, Z: 0}}
+			sectors := internal.GenerateBlankSectors(3)
+			game := internal.NewGame("test", mines, sectors, 3)
+			game.Sectors[2].Radiation = 0
+			game.Reveal(2) // click edge
+			It("should not reveal any more sectors", func() {
+				for sectorId := range game.Sectors {
+					sector := game.Sectors[sectorId]
+					if sectorId == 2 {
+						Expect(sector.Radiation).To(Equal(0))
+					} else {
+						Expect(sector.Radiation).To(Equal(-1))
+					}
+				}
+			})
+		})
 	})
 })
