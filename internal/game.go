@@ -42,7 +42,7 @@ func GenerateBlankSectors(scale int) []Sector {
 
 func GenerateGame(id string, scale int) Game {
 	sectors := GenerateBlankSectors(scale)
-	game := Game{Id: id, State: "PLAY", Sectors: sectors}
+	game := Game{Id: id, State: "PLAY", Sectors: sectors, Size: scale}
 	game.mines = []Location{{X: 1, Y: 1, Z: 1}, {X: 0, Y: 0, Z: 0}}
 	return game
 }
