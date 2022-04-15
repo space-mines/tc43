@@ -7,6 +7,31 @@ import (
 )
 
 var _ = Describe("Game", func() {
+	Describe("State is 'LOSE'", func() {
+		Context("when game state is 'LOSE'", func() {
+			mines := []internal.Location{{X: 1, Y: 1, Z: 1}}
+			sectors := internal.GenerateBlankSectors(3)
+			game := internal.NewGame("test", mines, sectors, 3)
+			game.State = "LOSE"
+
+			It("cannot reveal sectors", func() {
+				game.Reveal(0)
+				for _, sector := range game.Sectors {
+					Expect(sector.Radiation).To(Equal(-1))
+					Expect(sector.Marked).To(Equal(false))
+				}
+			})
+
+			It("cannot mark sectors", func() {
+				game.Mark(0)
+				for _, sector := range game.Sectors {
+					Expect(sector.Radiation).To(Equal(-1))
+					Expect(sector.Marked).To(Equal(false))
+				}
+			})
+		})
+	})
+
 	Describe("Reveal Sector", func() {
 		Context("when radiation > 1", func() {
 			It("only that sector is revealed", func() {

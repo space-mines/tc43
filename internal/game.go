@@ -48,7 +48,7 @@ func GenerateGame(id string, scale int) Game {
 }
 
 func (game *Game) Reveal(sectorId int) {
-	if sectorId < 0 || sectorId >= len(game.Sectors) {
+	if game.State == "LOSE" || sectorId < 0 || sectorId >= len(game.Sectors) {
 		return
 	}
 	sector := &game.Sectors[sectorId]
@@ -71,7 +71,7 @@ func (game *Game) Reveal(sectorId int) {
 }
 
 func (game *Game) Mark(sectorId int) {
-	if sectorId < 0 || sectorId >= len(game.Sectors) {
+	if game.State == "LOSE" || sectorId < 0 || sectorId >= len(game.Sectors) {
 		return
 	}
 	sector := &game.Sectors[sectorId]
