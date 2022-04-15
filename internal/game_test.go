@@ -231,4 +231,19 @@ var _ = Describe("Game", func() {
 		})
 	})
 
+	Context("when sector is NOT last mine", func() {
+		mines := []internal.Location{{X: 0, Y: 0, Z: 0}, {X: 1, Y: 0, Z: 0}}
+		sectors := internal.GenerateBlankSectors(3)
+		game := internal.NewGame("test", mines, sectors, 3)
+		game.Mark(0)
+		It("should NOT set game state to 'WIN'", func() {
+			Expect(game.State).NotTo(Equal("WIN"))
+		})
+
+		It("should NOT reveal all sectors", func() {
+			for i := 0; i < len(game.Sectors); i++ {
+				Expect(game.Sectors[i].Radiation).To(Equal(-1))
+			}
+		})
+	})
 })

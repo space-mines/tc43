@@ -79,7 +79,7 @@ func (game *Game) Mark(sectorId int) {
 		return
 	}
 	sector.Marked = !sector.Marked
-	if sector.Marked && game.isMine(sectorId) {
+	if sector.Marked && game.allMinesMarked() {
 		game.State = "WIN"
 		game.revealAllSectors()
 	}
@@ -90,6 +90,29 @@ func (game *Game) revealAllSectors() {
 	for i, sector := range game.Sectors {
 		game.Sectors[i].Radiation = CalculateRadiationFor(sector.X, sector.Y, sector.Z, game.mines)
 	}
+}
+
+func (game Game) allMinesMarked() bool {
+	markedSectors := game.getMarkedSectors()
+	if len(markedSectors) != len(game.mines) {
+		return false
+	}
+	for _, sector := range markedSectors {
+		if !game.isMine(sector.Id) {
+			return false
+		}
+	}
+	return true
+}
+
+func (game Game) getMarkedSectors() []Sector {
+	var markedSectors []Sector
+	for _, sector := range game.Sectors {
+		if sector.Marked {
+			markedSectors = append(markedSectors, sector)
+		}
+	}
+	return markedSectors
 }
 
 func (game Game) isMine(sectorId int) bool {
