@@ -65,7 +65,7 @@ func (game *Game) Reveal(sectorId int) {
 func (game *Game) revealAdjacentSectorsTo(x int, y int, z int) {
 	for i := x - 1; i <= x+1; i++ {
 		for j := y - 1; j <= y+1; j++ {
-			for k := z - 1; k <= x+1; k++ {
+			for k := z - 1; k <= z+1; k++ {
 				game.reveal(i, j, k)
 			}
 		}

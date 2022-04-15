@@ -25,7 +25,7 @@ var _ = Describe("Game", func() {
 			mines := []internal.Location{{X: 0, Y: 0, Z: 0}}
 			sectors := internal.GenerateBlankSectors(3)
 			game := internal.NewGame("test", mines, sectors, 3)
-			game.Reveal(26)
+			game.Reveal(2) // click edge
 			sectorIdsAdjacentToMine := internal.GetAdjacentSectorIdsFor(0, 0, 0, 3)
 			It("reveals all sectors with 0 radiation", func() {
 				for sectorId := range game.Sectors {
