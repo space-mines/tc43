@@ -55,6 +55,7 @@ func (game *Game) Reveal(sectorId int) {
 	location := Location{sector.X, sector.Y, sector.Z}
 	radiation := location.CalculateRadiation(game.mines)
 	sector.Radiation = radiation
+	sector.print()
 	if sector.Radiation == 0 {
 		game.revealAdjacentSectorsTo(sector.X, sector.Y, sector.Z)
 	}
