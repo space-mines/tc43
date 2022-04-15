@@ -58,14 +58,13 @@ It utilizes a very GETful API with JSON formatted information on the game.
 | `LOSE` | current game has ended with loss |  
 
 #### Radiation
-| value   | description                |
-|---------|----------------------------|
-| `-1`    | Unknown                    |
-| `0`     | No mines are adjacent      |
-| `1..24` | 1 to 24 mines are adjacent |
-| `25`    | Mine in this sector        |
+| value   | description                   |
+|---------|-------------------------------|
+| `-1`    | Unknown                       |
+| `0`     | No mines are adjacent         |
+| `1..24` | 1 to 24 mines are adjacent    |
 
-#### Sector colors
+#### Suggested sector colors
 | radiation | color  |
 |-----------|--------|
 | `-1`      | gray   |
@@ -74,7 +73,7 @@ It utilizes a very GETful API with JSON formatted information on the game.
 | `2`       | green  |
 | `3`       | yellow |
 | `4`       | orange |
-| `5`       | red    |
+| `5+`      | red    |
 
 ## Database NOT required yet
 
