@@ -20,5 +20,33 @@ var _ = Describe("Game", func() {
 				}
 			})
 		})
+
+		Context("when radiation = 0", func() {
+			mines := []internal.Location{{X: 0, Y: 0, Z: 0}}
+			sectors := internal.GenerateBlankSectors(3)
+			game := internal.NewGame("test", mines, sectors, 3)
+			game.Reveal(26)
+			sectorIdsAdjacentToMine := internal.GetAdjacentSectorIdsFor(0, 0, 0, 3)
+			It("reveals all sectors with 0 radiation", func() {
+				for sectorId := range game.Sectors {
+					if !internal.Contains(sectorIdsAdjacentToMine, sectorId) && sectorId != 0 {
+						sector := game.Sectors[sectorId]
+						Expect(sector.Radiation).To(Equal(0))
+					}
+				}
+			})
+			It("does not reveal the mine", func() {
+				Expect(game.Sectors[0].Radiation).To(Equal(-1))
+			})
+			It("reveals sectors around mine", func() {
+				for sectorId := range game.Sectors {
+					if internal.Contains(sectorIdsAdjacentToMine, sectorId) {
+						sector := game.Sectors[sectorId]
+						Expect(sector.Radiation).To(Equal(1))
+					}
+				}
+			})
+		})
+
 	})
 })

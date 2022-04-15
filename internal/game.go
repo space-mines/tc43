@@ -49,10 +49,55 @@ func GenerateGame(id string, scale int) Game {
 
 func (game *Game) Reveal(sectorId int) {
 	sector := &game.Sectors[sectorId]
+	if sector.Radiation != -1 || sector.Marked {
+		return
+	}
 	location := Location{sector.X, sector.Y, sector.Z}
 	radiation := location.CalculateRadiation(game.mines)
 	sector.Radiation = radiation
-	sector.print()
+	if sector.Radiation == 0 {
+		game.revealAdjacentSectorsTo(sector.X, sector.Y, sector.Z)
+	}
+}
+
+func (game *Game) revealAdjacentSectorsTo(x int, y int, z int) {
+	for i := x - 1; i <= x+1; i++ {
+		for j := y - 1; j <= y+1; j++ {
+			for k := z - 1; k <= x+1; k++ {
+				game.reveal(i, j, k)
+			}
+		}
+	}
+}
+
+func GetAdjacentSectorIdsFor(x int, y int, z int, scale int) []int {
+	var sectorIds []int
+	for i := x - 1; i <= x+1; i++ {
+		for j := y - 1; j <= y+1; j++ {
+			for k := z - 1; k <= z+1; k++ {
+				if !(x == i && y == j && z == k) && isValidSectorLocation(i, j, k, scale) {
+					sectorIds = append(sectorIds, getSectorIdFromLocation(i, j, k, scale))
+				}
+			}
+		}
+	}
+	return sectorIds
+}
+
+func (game *Game) reveal(x int, y int, z int) {
+	if !isValidSectorLocation(x, y, z, game.Size) {
+		return
+	}
+	sectorId := getSectorIdFromLocation(x, y, z, game.Size)
+	game.Reveal(sectorId)
+}
+
+func isValidSectorLocation(x int, y int, z int, scale int) bool {
+	return isValidCoordinate(x, scale) && isValidCoordinate(y, scale) && isValidCoordinate(z, scale)
+}
+
+func isValidCoordinate(n int, scale int) bool {
+	return n > -1 && n < scale
 }
 
 func (game *Game) Mark(sectorId int) {
