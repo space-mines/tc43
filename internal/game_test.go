@@ -118,6 +118,25 @@ var _ = Describe("Game", func() {
 				}
 			})
 		})
+
+		Context("when sector is already revealed", func() {
+			mines := []internal.Location{{X: 0, Y: 0, Z: 0}}
+			sectors := internal.GenerateBlankSectors(3)
+			game := internal.NewGame("test", mines, sectors, 3)
+			game.Sectors[2].Radiation = 1
+			game.Mark(2)
+			It("should NOT mark that sector", func() {
+				for sectorId := range game.Sectors {
+					sector := game.Sectors[sectorId]
+					if sectorId == 2 {
+						Expect(sector.Radiation).To(Equal(1))
+					} else {
+						Expect(sector.Radiation).To(Equal(-1))
+					}
+					Expect(sector.Marked).To(Equal(false))
+				}
+			})
+		})
 	})
 
 })

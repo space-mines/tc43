@@ -104,6 +104,9 @@ func isValidCoordinate(n int, scale int) bool {
 
 func (game *Game) Mark(sectorId int) {
 	sector := &game.Sectors[sectorId]
+	if sector.Radiation != -1 {
+		return
+	}
 	sector.Marked = !sector.Marked
 	sector.print()
 }
