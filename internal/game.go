@@ -61,6 +61,7 @@ func (game *Game) Reveal(sectorId int) {
 	sector.print()
 	if sector.Radiation == 43 {
 		game.State = "LOSE"
+		game.Sectors = []Sector{}
 	}
 	if sector.Radiation == 0 {
 		println("Revealing adjacent sectors...")

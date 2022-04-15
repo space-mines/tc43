@@ -105,8 +105,13 @@ var _ = Describe("Game", func() {
 			sectors := internal.GenerateBlankSectors(3)
 			game := internal.NewGame("test", mines, sectors, 3)
 			game.Reveal(0)
+
 			It("sets game state to LOSE", func() {
 				Expect(game.State).To(Equal("LOSE"))
+			})
+
+			It("removes all sectors", func() {
+				Expect(len(game.Sectors)).To(Equal(0))
 			})
 		})
 	})
